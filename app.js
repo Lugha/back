@@ -6,7 +6,6 @@ const io = require("socket.io")(server);
 
 io.listen(server);
 
-<<<<<<< HEAD
 const sentencesAndTraductions = [
   {
     sentence: 'How are you today ?',
@@ -37,15 +36,6 @@ function sendSentence() {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
-=======
-io.on("connection", socket => {
-  console.log("a user connected");
-  io.emit("receiveSentence", "test");
-  socket.on("sendSentence", msg => {
-    console.log("receive: ", msg);
-    io.emit("receiveSentence", msg);
-  });
->>>>>>> 723ed28313d3288a172ffc5f03c1ee5b995e9ce9
 });
 
 sendSentence();
