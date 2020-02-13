@@ -4,7 +4,7 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
-io.listen(server);
+io.listen(server)
 
 const sentencesAndTraductions = [
   {
@@ -20,25 +20,34 @@ const sentencesAndTraductions = [
     traductions: [
       '*Tu peux me donner à manger ?',
       'Pourquoi t\'es nul à smash ?',
-      'Je serai musclé dans combien de temps ?'
+      'Je serai musclé dans combien de temps ?',
+      'Gateaux ?'
+    ]
+  },
+  {
+    sentence: 'What\'s the deal ?',
+    traductions: [
+      'C\'est quoi les bails ?',
+      'T\'as un problème negro ?',
+      'Quel est le problème ?',
     ]
   },
 ]
 
-let i = 0;
-function sendSentence() {
+function sendSentence(socket) {
   console.log("sending to mobiles");
-  io.sockets.emit('receiveSentence', JSON.stringify(sentencesAndTraductions[i]));
-  if (i === 0) i = 1;
-  else if (i === 1) i = 0;
-  setTimeout(sendSentence, 5 * 1000);
+  try {
+    socket.emit('receiveSentence', JSON.stringify(sentencesAndTraductions));
+  } catch (error) {
+    console.error(`Error: Erreur emit [receiveSentence]`);
+  }
+  console.log("send");
 }
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  sendSentence(socket)
 });
-
-sendSentence();
 
 server.listen(5001, () => {
   console.log("listen on 5001 ...");
