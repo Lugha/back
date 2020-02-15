@@ -25,7 +25,7 @@ const rounds = [
       { text: 'Quel est le problème ?', success: true },
     ],
   },
-];
+]
 
 function getRandomTraductionRound(socket) {
   const randomRound = getRandomInt(0, rounds.length);
