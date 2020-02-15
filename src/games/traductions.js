@@ -28,18 +28,11 @@ const rounds = [
   },
 ];
 
-function sendRandomRound(socket) {
+function getRandomRound(socket) {
   const randomRound = getRandomInt(0, rounds.length);
-
-  console.log('sending random sentence to mobile');
-  try {
-    socket.emit('getRandomRound', JSON.stringify(rounds[randomRound]));
-  } catch (error) {
-    console.error(`Error: Erreur emit [receiveSentence]`);
-  }
-  console.log('send');
+  return JSON.stringify(rounds[randomRound]);
 }
 
 module.exports = {
-  sendRandomRound
+  getRandomRound
 }

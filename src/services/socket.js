@@ -1,11 +1,11 @@
-const { sendRandomRound } = require("../games/traductions");
+const { getRandomRound } = require("../games/traductions");
 
 module.exports = (io) => {
-  io.on('connection', (socket) => {
+  io.on('connection', socket => {
     console.log('a user connected');
 
-    io.on('getRandomRound', socket => {
-      sendRandomRound(socket);
+    socket.on('getRandomRound', () => {
+      socket.emit('getRandomRound', getRandomRound());
     });
   });
 };
