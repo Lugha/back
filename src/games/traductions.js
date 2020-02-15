@@ -4,26 +4,25 @@ const rounds = [
   {
     sentence: 'How are you today ?',
     traductions: [
-      'Il pleut aujourd\'hui ?',
-      '*Comment allez-vous aujourd\'hui ?',
-      'La glace était-elle délicieuse ?',
+      { text: 'Il pleut aujourd\'hui ?', success: false },
+      { text: 'Comment allez-vous aujourd\'hui ?', success: true },
+      { text: 'La glace était-elle délicieuse ?', success: false },
     ],
   },
   {
     sentence: 'Can you give me food ?',
     traductions: [
-      '*Tu peux me donner à manger ?',
-      'Pourquoi t\'es nul à smash ?',
-      'Je serai musclé dans combien de temps ?',
-      'Gateaux ?',
+      { text: 'Tu peux me donner à manger ?', success: true },
+      { text: 'Pourquoi t\'es nul à smash ?', success: false },
+      { text: 'Je serai musclé dans combien de temps ?', success: false },
     ],
   },
   {
     sentence: 'What\'s the deal ?',
     traductions: [
-      'C\'est quoi les bails ?',
-      'T\'as un problème negro ?',
-      'Quel est le problème ?',
+      { text: 'C\'est quoi les bails ?', success: false },
+      { text: 'T\'as un problème negro ?', success: false },
+      { text: 'Quel est le problème ?', success: true },
     ],
   },
 ];
