@@ -1,4 +1,6 @@
-const sentencesAndTraductions = [
+const { getRandomInt } = require("../utils/random");
+
+const rounds = [
   {
     sentence: 'How are you today ?',
     traductions: [
@@ -26,10 +28,12 @@ const sentencesAndTraductions = [
   },
 ];
 
-function sendSentence(socket) {
-  console.log('sending to mobiles');
+function sendRandomRound(socket) {
+  const randomRound = getRandomInt(0, rounds.length);
+
+  console.log('sending random sentence to mobile');
   try {
-    socket.emit('receiveSentence', JSON.stringify(sentencesAndTraductions));
+    socket.emit('getRandomRound', JSON.stringify(rounds[randomRound]));
   } catch (error) {
     console.error(`Error: Erreur emit [receiveSentence]`);
   }
@@ -37,5 +41,5 @@ function sendSentence(socket) {
 }
 
 module.exports = {
-  sendSentence
+  sendRandomRound
 }

@@ -12,8 +12,6 @@ io.listen(server);
 
 require('./services/socket')(io);
 
-sendSentence(io);
-
 server.listen(port, () => {
   console.log(`listen on ${port} ...`);
 });
