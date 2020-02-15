@@ -1,0 +1,25 @@
+version: "3"
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ./db-data:/var/lib/mongo/data
+    logging:
+      driver: none
+
+  server:
+    build: ./docker
+    ports:
+      - "5001:5001"
+    environment:
+      MONGO_URI: mongodb://root:password@mongo/admin
+      PORT: 5001
+    volumes:
+      - ./:/usr/src/app
+    depends_on:
+      - mongo
