@@ -28,11 +28,11 @@ const rounds = [
   },
 ];
 
-function getRandomRound(socket) {
+function getRandomTraductionRound(socket) {
   const randomRound = getRandomInt(0, rounds.length);
   return JSON.stringify(rounds[randomRound]);
 }
 
 module.exports = {
-  getRandomRound
+  getRandomTraductionRound
 }
