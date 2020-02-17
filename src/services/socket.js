@@ -4,9 +4,9 @@ module.exports = (io) => {
   io.on('connection', socket => {
     console.log('a user connected');
 
-    socket.on('getRandomRound', () => {
-      console.log("getRandomRound");
-      socket.emit('getRandomRound', getRandomTraductionRound());
+    socket.on('GET_RANDOM_ROUND', () => {
+      console.log("GET_RANDOM_ROUND");
+      socket.emit('GET_RANDOM_ROUND', getRandomTraductionRound());
     });
 
     socket.on('joinRoom', room => {
