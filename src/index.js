@@ -1,6 +1,6 @@
 const express = require('express');
 
-const {port} = require('./configs');
+const { port } = require('./configs');
 
 const app = express();
 const server = require('http').createServer(app);

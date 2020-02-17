@@ -9,11 +9,15 @@ module.exports = (io) => {
       socket.emit('GET_RANDOM_ROUND', getRandomTraductionRound());
     });
 
-    socket.on('joinRoom', room => {
+    socket.on('JOIN_ROOM', room => {
       socket.join(room);
     });
 
-    socket.on('sendToRoom', (room, req) => {
+    socket.on('LEAVE_ROOM', room => {
+      socket.leave(room);
+    });
+
+    socket.on('SEND_TO_ROOM', (room, req) => {
       socket.to(room).emit(req);
     });
   });
