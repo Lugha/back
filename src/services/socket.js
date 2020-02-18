@@ -9,7 +9,8 @@ module.exports = (io) => {
       socket.emit('GET_RANDOM_ROUND', getRandomTraductionRound());
     });
 
-    socket.on('JOIN_ROOM', room => {
+    socket.on('JOIN_ROOM', ({ name: room }) => {
+      console.log('join room:', room)
       socket.join(room);
     });
 
