@@ -4,7 +4,8 @@
         "node": true
     },
     "extends": [
-        "google"
+        "google",
+        "prettier"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -15,5 +16,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "require-jsdoc": "off",
+        "new-cap": "off"
     }
 }

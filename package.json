@@ -4,18 +4,29 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon ./src/index",
+    "dev": "nodemon --exec babel-node ./src/index",
     "lint": "node_modules/eslint/bin/eslint.js ./src --fix"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.0",
+    "body-parser": "^1.19.0",
+    "core-js": "3",
+    "cron": "^1.8.2",
     "express": "^4.17.1",
+    "http-status": "^1.4.2",
     "nodemon": "^2.0.2",
     "socketio": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/polyfill": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1"
   },
   "private": true

@@ -1,15 +1,24 @@
-const express = require('express');
+import express from "express";
+import http from "http";
+import socket from "socket.io";
 
-const { port } = require('./configs');
+import expressInit from './services/express';
+import { socketInit } from "./services/socket";
+import { startGameCrons } from "./games";
+
+import configs from './configs';
 
 const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+expressInit(app);
+
+const server = http.createServer(app);
+const io = socket(server);
 
 io.listen(server);
 
-require('./services/socket')(io);
+socketInit(io);
+startGameCrons();
 
-server.listen(port, () => {
-  console.log(`listen on ${port} ...`);
+server.listen(configs.port, () => {
+  console.log(`listen on ${configs.port} ...`);
 });
