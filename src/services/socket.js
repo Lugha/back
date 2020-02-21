@@ -1,14 +1,11 @@
-import { getRandomTraductionRound } from "../games/traductions/data";
-
-import { traductionWaitingList } from "../games/traductions";
+import { traductionWaitingList, traductionsGames } from "../games/traductions";
 
 export const socketInit = io => {
   io.on("connection", socket => {
     console.log("a user connected");
 
-    socket.on("GET_RANDOM_ROUND", ({ room }) => {
-      console.log('get random:', room)
-      socket.to(room).emit("GET_RANDOM_ROUND", getRandomTraductionRound());
+    socket.on("END_ROUND", ({ room }) => {
+      traductionsGames[room].played += 1;
     });
 
     socket.on("CREATE_ROOM", () => {
