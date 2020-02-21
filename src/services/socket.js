@@ -10,17 +10,15 @@ export const socketInit = io => {
       socket.emit("GET_RANDOM_ROUND", getRandomTraductionRound());
     });
 
-    socket.on("JOIN_TRADUCTIONS_LIST", ({ pseudo }) => {
-      if (!traductionWaitingList.includes(pseudo)) {
-        traductionWaitingList.push(pseudo);
+    socket.on("CREATE_ROOM", () => {
+      if (!traductionWaitingList.includes(socket.id)) {
+        traductionWaitingList.push(socket.id);
+        console.log({ traductionWaitingList });
       }
     });
 
-    socket.on("LEAVE_TRADUCTIONS_LIST", ({ pseudo }) => {
-      traductionWaitingList.splice(traductionWaitingList.indexOf(pseudo), 1);
-    });
-
     socket.on("JOIN_ROOM", ({ name: room }) => {
+      console.log({ id: socket.id, room })
       socket.join(room);
     });
 
