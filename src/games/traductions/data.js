@@ -24,6 +24,30 @@ const rounds = [
       { text: "T'as un problème negro ?", success: false },
       { text: "Quel est le problème ?", success: true }
     ]
+  },
+  {
+    sentence: "pussy lemonade ",
+    traductions: [
+      { text: "limonade juteuse", success: false },
+      { text: "Citronnade de chatte", success: false },
+      { text: "Limonade de chatte", success: true }
+    ]
+  },
+  {
+    sentence: "yes",
+    traductions: [
+      { text: "pourquoi", success: false },
+      { text: "oui", success: true },
+      { text: "non", success: false }
+    ]
+  },
+  {
+    sentence: "dog",
+    traductions: [
+      { text: "chat", success: false },
+      { text: "prout", success: false },
+      { text: "chien", success: true }
+    ]
   }
 ];
 
