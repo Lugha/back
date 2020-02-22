@@ -2,6 +2,11 @@ import { CronJob } from "cron";
 
 import { traductionWaitingList, traductionsGames } from "..";
 
+const initGameData = {
+  needNextRound: 0,
+  active: true,
+}
+
 export const traductionsLauncher = io => {
   new CronJob(
     "* * * * * *",
@@ -12,9 +17,7 @@ export const traductionsLauncher = io => {
           .to(traductionWaitingList[1])
           .emit("CREATE_ROOM", "game");
         traductionWaitingList.splice(0, 2);
-        traductionsGames["game"] = {
-          needNextRound: 0
-        };
+        traductionsGames["game"] = initGameData;
         console.log({ traductionsGames });
       }
     },
