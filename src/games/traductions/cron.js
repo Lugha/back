@@ -15,8 +15,6 @@ export const traductionsLauncher = io => {
         traductionWaitingList.splice(0, 2);
         traductionsGames.push({
           room: "game",
-          player1: traductionWaitingList[0],
-          player2: traductionWaitingList[1],
           played: 2
         });
       }
@@ -33,7 +31,7 @@ export const traductionsGame = io => {
         if (game.played === 2) {
           console.log("push round");
           game.played = 0;
-          io.to(game.player1).to(game.player2).emit("GET_RANDOM_ROUND", getRandomTraductionRound());
+          io.sockets.in(game.room).emit("GET_RANDOM_ROUND", getRandomTraductionRound());
         }
       }
     }
