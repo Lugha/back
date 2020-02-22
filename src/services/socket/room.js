@@ -1,6 +1,6 @@
-import { traductionWaitingList } from "../../games/traductions";
+import { traductionWaitingList } from "../../games";
 
-export const initRoomSocket = socket => {
+export const useRoomSocket = (io, socket) => {
   socket.on("CREATE_ROOM", () => {
     if (!traductionWaitingList.includes(socket.id)) {
       traductionWaitingList.push(socket.id);
@@ -25,7 +25,8 @@ export const initRoomSocket = socket => {
     socket.leave(room);
   });
 
-  socket.on("SEND_TO_ROOM", (room, req) => {
-    socket.to(room).emit(req);
+  socket.on("SEND_TO_ROOM", ({ room, event }) => {
+    console.log(`send ${event} to ${room}`);
+    socket.to(room).emit(event);
   });
 };

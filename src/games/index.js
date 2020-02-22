@@ -1,6 +1,11 @@
-import { traductionsLauncher, traductionsGame } from "./traductions/cron";
+import { traductionsLauncher } from "./traductions/cron";
 
-export const startGameCrons = io => {
+export const startGameLaunchers = io => {
   traductionsLauncher(io);
-  traductionsGame(io);
 };
+
+/*
+  CONST FOR TRADUCTIONS GAMES
+*/
+export const traductionWaitingList = [];
+export const traductionsGames = {};

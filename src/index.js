@@ -4,7 +4,7 @@ import socketIo from "socket.io";
 
 import expressInit from './services/express';
 import { socketInit } from "./services/socket";
-import { startGameCrons } from "./games";
+import { startGameLaunchers } from "./games";
 
 import configs from './configs';
 
@@ -17,7 +17,7 @@ const io = socketIo(server);
 io.listen(server);
 
 socketInit(io);
-startGameCrons(io);
+startGameLaunchers(io);
 
 server.listen(configs.port, () => {
   console.log(`listen on ${configs.port} ...`);

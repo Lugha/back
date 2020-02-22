@@ -1,8 +1,10 @@
-import { initRoomSocket } from './room';
+import { useRoomSocket } from './room';
+import { useGameSocket } from './game';
 
 export const socketInit = io => {
   io.on("connection", socket => {
     console.log("a user connected");
-    initRoomSocket(socket);
+    useRoomSocket(io, socket);
+    useGameSocket(io, socket);
   });
 };
