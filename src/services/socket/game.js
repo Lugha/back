@@ -21,8 +21,8 @@ export const useGameSocket = (io, socket) => {
           console.log('GET END GAME')
           io.sockets
             .in(room)
-            .emit("GET_END_GAME", JSON.stringify({end: true}));
-            game.active = true;
+            .emit("GET_END_GAME", JSON.stringify({ end: true }));
+          game.active = true;
         }
         game.needNextRound = 0;
       }

@@ -1,4 +1,5 @@
 import { traductionWaitingList } from "../../games";
+import { traductionsGames } from "../../games";
 
 export const useRoomSocket = (io, socket) => {
   socket.on("CREATE_ROOM", () => {
@@ -23,6 +24,10 @@ export const useRoomSocket = (io, socket) => {
   socket.on("LEAVE_ROOM", ({ room }) => {
     console.log("leave room", room);
     socket.leave(room);
+
+    io.sockets
+      .in(room)
+      .emit("GET_END_GAME", JSON.stringify({ end: true }));
   });
 
   socket.on("SEND_TO_ROOM", ({ room, event }) => {
