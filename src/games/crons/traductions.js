@@ -1,11 +1,14 @@
 import uuidv4 from "uuid/v4";
 import { CronJob } from "cron";
 
+import traductionModel from "../../databases/traductions";
+
 export const traductionWaitingList = [];
 export const traductionsGames = {};
 const traductionGameTemplate = ({
   room,
   roundsTotal = 1,
+  stageData = {},
   socket1,
   socket2
 }) => {
@@ -15,7 +18,7 @@ const traductionGameTemplate = ({
     actualRound: 1,
     roundsTotal,
     waitingNextStage: 0,
-    stageData: {},
+    stageData,
     stageFailed: false,
     player1: {
       socket: socket1,
@@ -42,8 +45,18 @@ export const traductionsLauncher = io => {
         console.log("launch game");
         const room = "room-" + uuidv4();
 
+        const stageData = await new Promise((resolve, reject) => {
+          traductionModel.findOneRandom((err, result) => {
+            if (err) {
+              reject(err);
+            }
+            resolve(result);
+          });
+        });
+
         traductionsGames[room] = traductionGameTemplate({
           room,
+          stageData,
           socket1: traductionWaitingList[0],
           socket2: traductionWaitingList[1]
         });
