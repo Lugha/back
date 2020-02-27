@@ -11,7 +11,6 @@ export default new Schema({
     required: true
   },
   socketId: {
-    type: String,
-    unique: true
+    type: String
   }
 });
