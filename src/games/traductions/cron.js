@@ -16,9 +16,8 @@ const traductionGameTemplate = ({
     active: false,
     actualRound: 1,
     roundsTotal,
-    traductions: [],
+    traductions: {},
     [player1]: {
-      lastChoice: null,
       score: 0
     },
     [player2]: {
