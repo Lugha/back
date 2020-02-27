@@ -1,26 +1,27 @@
 import uuidv4 from "uuid/v4";
 import { CronJob } from "cron";
 
-import UserModel from "../../databases/users";
-
 const traductionWaitingList = [];
 const traductionsGames = {};
 const traductionGameTemplate = ({
   room,
   roundsTotal = 5,
-  player1,
-  player2
+  socket1,
+  socket2
 }) => {
   return {
     room,
     active: false,
     actualRound: 1,
     roundsTotal,
-    traductions: {},
-    [player1]: {
+    stagePlayedBy: 0,
+    stageDatas: {},
+    player1: {
+      socket: socket1,
       score: 0
     },
-    [player2]: {
+    player2: {
+      socket: socket2,
       score: 0
     }
   };
@@ -45,36 +46,10 @@ export const traductionsLauncher = io => {
         console.log("launch game");
         const room = "room-" + uuidv4();
 
-        const { username: player1 } = await UserModel.findOne({
-          socketId: traductionWaitingList[0]
-        }).lean();
-        const { username: player2 } = await UserModel.findOne({
-          socketId: traductionWaitingList[1]
-        }).lean();
-
-        if (!player1 || !player2) {
-          console.log("User not found:", { player1, player2 });
-          return;
-        }
-
-        await UserModel.updateOne(
-          {
-            socketId: traductionWaitingList[0]
-          },
-          { opponent: player2 }
-        );
-
-        await UserModel.updateOne(
-          {
-            socketId: traductionWaitingList[1]
-          },
-          { opponent: player1 }
-        );
-
         traductionsGames[room_name] = traductionGameTemplate({
           room,
-          player1,
-          player2
+          socket1: traductionWaitingList[0],
+          socket2: traductionWaitingList[1]
         });
 
         createRoom(io, traductionsGames[room_name]);

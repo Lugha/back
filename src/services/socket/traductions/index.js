@@ -1,7 +1,5 @@
 import { diffObj } from "../../../utils/diff";
 
-import UserModel from "../../../databases/users";
-
 import { traductionsGames } from "../../../games";
 import { getRandomTraductionRound } from "../../../games/traductions/data";
 
@@ -20,14 +18,9 @@ export const useTraductionsSocket = (io, socket) => {
     }
   });
 
-  socket.on("UPDATE_GAME_TRADUCTIONS", async ({ room, choice, opponent }) => {
+  socket.on("UPDATE_GAME_TRADUCTIONS", async ({ room, choice }) => {
     console.log("UPDATE_GAME_TRADUCTIONS");
 
-    const user = await UserModel.findOne({ socketId: socket.id }).lean();
-    if (!user) {
-      console.log("User not found");
-      return;
-    }
     if (!traductionsGames[room]) {
       console.log("Game not found");
       return;
@@ -36,17 +29,23 @@ export const useTraductionsSocket = (io, socket) => {
     const oldGame = traductionsGames[room];
     const game = { ...game };
 
-    game[user.username].lastChoice = choice;
-    if (!game.traductions[choice].success) {
+    if (!game.stageDatas[choice].success) {
       game.active = false;
       return diffObj(oldGame, game);
     }
 
-    game[user.username].score += 5;
-    game.actualRound += 1;
+    if (game.player1.socket === socket.id) {
+      game.player1.score += 5;
+    } else {
+      game.player2.score += 5;
+    }
 
-    if (game[opponent].lastChoice && game.actualRound <= game.roundsTotal) {
-      game.traductions = getRandomTraductionRound();
+    game.actualRound += 1;
+    game.stagePlayedBy += 1;
+
+    if (game.stagePlayedBy === 2 && game.actualRound <= game.roundsTotal) {
+      game.stagePlayedBy = 0;
+      game.stageDatas = getRandomTraductionRound();
     }
 
     io.sockets.in(room).emit("UPDATE_GAME", diffObj(oldGame, game));
