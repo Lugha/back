@@ -42,9 +42,9 @@ export const traductionsLauncher = io => {
   new CronJob(
     "* * * * * *",
     async () => {
-      const room = "room-" + uuidv4();
       if (traductionWaitingList.length >= 2) {
         console.log("launch game");
+        const room = "room-" + uuidv4();
 
         const { username: player1 } = await UserModel.findOne({
           socketId: traductionWaitingList[0]
