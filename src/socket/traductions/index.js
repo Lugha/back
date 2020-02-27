@@ -31,25 +31,28 @@ export const useTraductionsSocket = (io, socket) => {
     }
 
     const oldGame = traductionsGames[room];
-    const game = { ...game };
+    const game = { ...oldGame };
 
-    if (!game.stageDatas[choice].success) {
-      game.active = false;
-      return diffObj(oldGame, game);
+    game.waitingNextStage += 1;
+
+    if (!game.stageData[choice].success) {
+      game.stageFailed = true;
     }
 
-    if (game.player1.socket === socket.id) {
+    if (game.stageFailed && game.waitingNextStage === 2) {
+      game.active = false;
+      return io.sockets.in(room).emit("UPDATE_GAME", diffObj(oldGame, game));
+    }
+
+    if (game.player1.socket === socket.id && game.stageData[choice].success) {
       game.player1.score += 5;
-    } else {
+    } else if (game.stageData[choice].success) {
       game.player2.score += 5;
     }
 
-    game.actualRound += 1;
-    game.stagePlayedBy += 1;
-
-    if (game.stagePlayedBy === 2 && game.actualRound <= game.roundsTotal) {
-      game.stagePlayedBy = 0;
-      game.stageDatas = await new Promise((resolve, reject) => {
+    if (game.waitingNextStage === 2) {
+      game.waitingNextStage = 0;
+      game.stageData = await new Promise((resolve, reject) => {
         traductionModel.findOneRandom((err, result) => {
           if (err) {
             reject(err);
