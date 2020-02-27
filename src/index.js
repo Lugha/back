@@ -3,7 +3,7 @@ import http from "http";
 import socketIo from "socket.io";
 
 import expressInit from "./services/express";
-import { socketInit } from "./services/socket";
+import { socketInit } from "./socket";
 import { startGameLaunchers } from "./games";
 
 import db from "./services/mongo";

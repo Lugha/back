@@ -1,7 +1,11 @@
-import { diffObj } from "../../../utils/diff";
+import { diffObj } from "../../utils/diff";
 
-import { traductionsGames } from "../../../games";
-import { getRandomTraductionRound } from "../../../games/traductions/data";
+import {
+  traductionWaitingList,
+  traductionsGames
+} from "../../games/crons/traductions";
+
+import traductionModel from "../../databases/traductions";
 
 export const useTraductionsSocket = (io, socket) => {
   socket.on("JOIN_TRADUCTIONS_WAITINGLIST", () => {
@@ -45,7 +49,14 @@ export const useTraductionsSocket = (io, socket) => {
 
     if (game.stagePlayedBy === 2 && game.actualRound <= game.roundsTotal) {
       game.stagePlayedBy = 0;
-      game.stageDatas = getRandomTraductionRound();
+      game.stageDatas = await new Promise((resolve, reject) => {
+        traductionModel.findOneRandom((err, result) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(result);
+        });
+      });
     }
 
     io.sockets.in(room).emit("UPDATE_GAME", diffObj(oldGame, game));

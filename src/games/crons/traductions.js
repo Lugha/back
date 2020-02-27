@@ -1,8 +1,8 @@
 import uuidv4 from "uuid/v4";
 import { CronJob } from "cron";
 
-const traductionWaitingList = [];
-const traductionsGames = {};
+export const traductionWaitingList = [];
+export const traductionsGames = {};
 const traductionGameTemplate = ({
   room,
   roundsTotal = 5,
