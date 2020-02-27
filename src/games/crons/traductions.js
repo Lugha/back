@@ -39,10 +39,10 @@ export const traductionsLauncher = io => {
     async () => {
       if (traductionWaitingList.length >= 2) {
         console.log("launch game");
-        const room = "room-" + uuidv4();
+        const room_name = "room-" + uuidv4();
 
         traductionsGames[room_name] = traductionGameTemplate({
-          room,
+          room_name,
           socket1: traductionWaitingList[0],
           socket2: traductionWaitingList[1]
         });
