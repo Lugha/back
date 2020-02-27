@@ -1,0 +1,13 @@
+{
+  "lastRun": "1582818476983-users.js",
+  "migrations": [
+    {
+      "title": "1582813514430-traductions.js",
+      "timestamp": 1582818878260
+    },
+    {
+      "title": "1582818476983-users.js",
+      "timestamp": 1582818878293
+    }
+  ]
+}

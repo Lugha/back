@@ -15,7 +15,7 @@ const traductionGameTemplate = ({
     actualRound: 1,
     roundsTotal,
     stagePlayedBy: 0,
-    stageDatas: {},
+    stageData: {},
     player1: {
       socket: socket1,
       score: 0
@@ -28,11 +28,6 @@ const traductionGameTemplate = ({
 };
 
 function createRoom(io, game) {
-  io.to(traductionWaitingList[0])
-    .to(traductionWaitingList[1])
-    .emit("INVITATION_TO_JOIN_ROOM", room_name);
-  traductionWaitingList.splice(0, 2);
-
   io.to(traductionWaitingList[0])
     .to(traductionWaitingList[1])
     .emit("UPDATE_GAME", JSON.stringify(game));

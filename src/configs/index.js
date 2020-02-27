@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   port: process.env.PORT || 5001,
   mongo_uri: process.env.MONGO_URI,
   privateKey: `-----BEGIN RSA PRIVATE KEY-----

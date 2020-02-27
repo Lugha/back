@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-import configs from "../configs";
+const configs = require("../configs");
 
-export async function connect() {
+async function connect() {
   await mongoose.connect(configs.mongo_uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -10,14 +10,16 @@ export async function connect() {
   console.log("Mongo Connected");
 }
 
-export const getConnect = () => mongoose.connection;
+async function getConnect() {
+  return mongoose.connection;
+}
 
-export async function close() {
+async function close() {
   await mongoose.disconnect();
   console.log("Mongo Disconnected");
 }
 
-export default {
+module.exports = {
   connect,
   getConnect,
   close

@@ -13,8 +13,5 @@ export default new Schema({
   socketId: {
     type: String,
     unique: true
-  },
-  opponent: {
-    type: String
   }
 });
