@@ -1,7 +1,7 @@
 import { Strategy } from "passport-local";
 import passport from "passport";
 
-import usersModel from '../databases/users';
+import usersModel from "../databases/users";
 
 passport.use(
   "local-login",
@@ -16,7 +16,10 @@ passport.use(
           return done(err);
         }
 
-        if (!user || !usersModel.comparePasswordAndHash(password, user.password)) {
+        if (
+          !user ||
+          !usersModel.comparePasswordAndHash(password, user.password)
+        ) {
           return done(null, false);
         }
 

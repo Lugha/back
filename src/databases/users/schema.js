@@ -9,5 +9,12 @@ export default new Schema({
   password: {
     type: String,
     required: true
+  },
+  socketId: {
+    type: String,
+    unique: true
+  },
+  opponent: {
+    type: String
   }
 });
