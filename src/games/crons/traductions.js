@@ -5,7 +5,7 @@ import log4js from "log4js";
 import traductionModel from "../../databases/traductions";
 
 const logger = log4js.getLogger("CRONS:TRADUCTIONS");
-logger.level = 'debug';
+logger.level = "debug";
 
 export const traductionWaitingList = [];
 export const traductionsGames = {};
@@ -51,14 +51,20 @@ export const traductionsLauncher = io => {
 
         const room = "room-" + uuidv4();
 
-        const stageData = await new Promise((resolve, reject) => {
-          traductionModel.findOneRandom((err, result) => {
-            if (err) {
-              reject(err);
-            }
-            resolve(result);
+        let stageData;
+
+        try {
+          stageData = await new Promise((resolve, reject) => {
+            traductionModel.findOneRandom((err, result) => {
+              if (err) {
+                reject(err);
+              }
+              resolve(result);
+            });
           });
-        });
+        } catch (err) {
+          logger.fatal("Error when set traductions datas");
+        }
 
         traductionsGames[room] = traductionGameTemplate({
           room,
