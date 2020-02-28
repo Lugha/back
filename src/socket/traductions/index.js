@@ -10,7 +10,7 @@ import {
 import traductionModel from "../../databases/traductions";
 
 const logger = log4js.getLogger("SOCKET:TRADUCTIONS");
-logger.level = 'debug';
+logger.level = "debug";
 
 export const useTraductionsSocket = (io, socket) => {
   socket.on("JOIN_WAITINGLIST", () => {
@@ -42,16 +42,24 @@ export const useTraductionsSocket = (io, socket) => {
 
     game.waitingNextStage += 1;
 
+    console.log({ choice });
+
     if (!game.stageData.traductions[choice].success) {
       game.stageFailed = true;
     }
 
     if (game.stageFailed && game.waitingNextStage === 2) {
       game.active = false;
-      return io.sockets.in(room).emit("UPDATE_GAME", diffObj(oldGame, game));
+      traductionsGames[room] = game;
+      return io.sockets
+        .in(room)
+        .emit("UPDATE_GAME", JSON.stringify(diffObj(oldGame, game)));
     }
 
-    if (game.player1.socket === socket.id && game.stageData.traductions[choice].success) {
+    if (
+      game.player1.socket === socket.id &&
+      game.stageData.traductions[choice].success
+    ) {
       game.player1.score += 5;
     } else if (game.stageData.traductions[choice].success) {
       game.player2.score += 5;
@@ -69,6 +77,9 @@ export const useTraductionsSocket = (io, socket) => {
       });
     }
 
-    io.sockets.in(room).emit("UPDATE_GAME", diffObj(oldGame, game));
+    traductionsGames[room] = game;
+    io.sockets
+      .in(room)
+      .emit("UPDATE_GAME", JSON.stringify(diffObj(oldGame, game)));
   });
 };
