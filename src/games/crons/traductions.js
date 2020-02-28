@@ -1,7 +1,10 @@
 import uuidv4 from "uuid/v4";
 import { CronJob } from "cron";
+import log4js from "log4js";
 
 import traductionModel from "../../databases/traductions";
+
+const logger = log4js.getLogger("CRONS:TRADUCTIONS");
 
 export const traductionWaitingList = [];
 export const traductionsGames = {};
@@ -32,6 +35,7 @@ const traductionGameTemplate = ({
 };
 
 function createRoom(io, game) {
+  logger.info(`create room => ${game}`);
   io.to(traductionWaitingList[0])
     .to(traductionWaitingList[1])
     .emit("UPDATE_GAME", JSON.stringify(game));
@@ -42,7 +46,8 @@ export const traductionsLauncher = io => {
     "* * * * * *",
     async () => {
       if (traductionWaitingList.length >= 2) {
-        console.log("launch game");
+        logger.info(`create new game from 2 players`);
+
         const room = "room-" + uuidv4();
 
         const stageData = await new Promise((resolve, reject) => {

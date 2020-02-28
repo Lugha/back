@@ -1,3 +1,5 @@
+import log4js from "log4js";
+
 import { diffObj } from "../../utils/diff";
 
 import {
@@ -7,8 +9,11 @@ import {
 
 import traductionModel from "../../databases/traductions";
 
+const logger = log4js.getLogger("SOCKET:TRADUCTIONS");
+
 export const useTraductionsSocket = (io, socket) => {
   socket.on("JOIN_TRADUCTIONS_WAITINGLIST", () => {
+    logger.info(`JOIN_TRADUCTIONS_WAITINGLIST => ${socket.id}`);
     if (!traductionWaitingList.includes(socket.id)) {
       traductionWaitingList.push(socket.id);
       console.log({ traductionWaitingList });
@@ -16,6 +21,7 @@ export const useTraductionsSocket = (io, socket) => {
   });
 
   socket.on("LEAVE_TRADUCTIONS_WAITINGLIST", () => {
+    logger.info(`LEAVE_TRADUCTIONS_WAITINGLIST => ${socket.id}`);
     if (traductionWaitingList.includes(socket.id)) {
       traductionWaitingList.splice(traductionWaitingList.indexOf(socket.id), 1);
       console.log({ traductionWaitingList });
@@ -23,10 +29,10 @@ export const useTraductionsSocket = (io, socket) => {
   });
 
   socket.on("UPDATE_GAME_TRADUCTIONS", async ({ room, choice }) => {
-    console.log("UPDATE_GAME_TRADUCTIONS");
+    logger.info(`UPDATE_GAME_TRADUCTIONS => ${room}`);
 
     if (!traductionsGames[room]) {
-      console.log("Game not found");
+      logger.error(`Game not found => ${room}`);
       return;
     }
 

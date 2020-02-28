@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "http-status": "^1.4.2",
     "jsonwebtoken": "^8.5.1",
+    "log4js": "^6.1.2",
     "migrate": "^1.6.2",
     "mongoose": "^5.9.2",
     "mongoose-simple-random": "^0.4.1",
