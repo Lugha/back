@@ -1,16 +1,17 @@
+import log4js from "log4js";
+
+const logger = log4js.getLogger("SOCKET:ROOM");
+
 export const useRoomSocket = (io, socket) => {
   socket.on("JOIN_ROOM", ({ room }) => {
-    console.log("join room", room);
+    logger.info(`${socket.id} => join room => ${room}`);
+
     socket.join(room);
   });
 
   socket.on("LEAVE_ROOM", ({ room }) => {
-    console.log("leave room", room);
-    socket.leave(room);
-  });
+    logger.info(`${socket.id} => leave room => ${room}`);
 
-  socket.on("SEND_TO_ROOM", ({ room, event }) => {
-    console.log(`send ${event} to ${room}`);
-    socket.to(room).emit(event);
+    socket.leave(room);
   });
 };

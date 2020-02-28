@@ -1,7 +1,10 @@
+import log4js from "log4js";
 import { Strategy } from "passport-local";
 import passport from "passport";
 
 import usersModel from "../databases/users";
+
+const logger = log4js.getLogger("PASSPORT:LOCAL");
 
 passport.use(
   "local-login",
@@ -11,8 +14,11 @@ passport.use(
       passwordField: "password"
     },
     (username, password, done) => {
+      logger.info(`Attempt login user => ${username}`);
+
       usersModel.findOne({ username }, (err, user) => {
         if (err) {
+          logger.fatal("Cannot found user");
           return done(err);
         }
 
@@ -20,6 +26,7 @@ passport.use(
           !user ||
           !usersModel.comparePasswordAndHash(password, user.password)
         ) {
+          logger.fatal("User not found");
           return done(null, false);
         }
 
@@ -38,15 +45,19 @@ passport.use(
       passReqToCallback: true
     },
     (req, username, password, done) => {
+      logger.info(`Attempt login user => ${username}`);
+
       usersModel.findOne({ username }, async (err, result) => {
         if (result) {
-          return done("That username is already taken.", false);
+          return done("Username already taken.", false);
         }
 
         const user = await usersModel.create({
           username,
           password: usersModel.generateHash(password)
         });
+
+        logger.info('User created');
 
         return done(null, user);
       });
