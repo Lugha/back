@@ -5,6 +5,7 @@ import passport from "passport";
 import usersModel from "../databases/users";
 
 const logger = log4js.getLogger("PASSPORT:LOCAL");
+logger.level = 'debug';
 
 passport.use(
   "local-login",

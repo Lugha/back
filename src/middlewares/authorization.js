@@ -6,6 +6,7 @@ import usersModel from "../databases/users";
 import configs from "../configs";
 
 const logger = log4js.getLogger("AUTHORIZATION");
+logger.level = 'debug';
 
 export function authorization() {
   return async (req, res, next) => {

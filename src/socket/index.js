@@ -3,6 +3,7 @@ import { useRoomSocket } from "./room";
 import { useTraductionsSocket } from "./traductions";
 
 const logger = log4js.getLogger("SOCKET");
+logger.level = 'debug';
 
 export const socketInit = io => {
   io.on("connection", socket => {

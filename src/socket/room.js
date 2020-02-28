@@ -1,6 +1,7 @@
 import log4js from "log4js";
 
 const logger = log4js.getLogger("SOCKET:ROOM");
+logger.level = 'debug';
 
 export const useRoomSocket = (io, socket) => {
   socket.on("JOIN_ROOM", ({ room }) => {

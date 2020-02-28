@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn migrate-up && nodemon --exec babel-node ./src/index",
+    "dev": "yarn migrate-up && nodemon --exec babel-node -o ./dist/index",
     "lint": "node_modules/eslint/bin/eslint.js ./src --fix",
     "migrate-up": "./node_modules/migrate/bin/migrate up",
     "migrate-down": "./node_modules/migrate/bin/migrate down",

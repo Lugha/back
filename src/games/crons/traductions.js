@@ -5,6 +5,7 @@ import log4js from "log4js";
 import traductionModel from "../../databases/traductions";
 
 const logger = log4js.getLogger("CRONS:TRADUCTIONS");
+logger.level = 'debug';
 
 export const traductionWaitingList = [];
 export const traductionsGames = {};

@@ -10,6 +10,7 @@ import {
 import traductionModel from "../../databases/traductions";
 
 const logger = log4js.getLogger("SOCKET:TRADUCTIONS");
+logger.level = 'debug';
 
 export const useTraductionsSocket = (io, socket) => {
   socket.on("JOIN_WAITINGLIST", () => {
