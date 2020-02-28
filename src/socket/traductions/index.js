@@ -12,24 +12,24 @@ import traductionModel from "../../databases/traductions";
 const logger = log4js.getLogger("SOCKET:TRADUCTIONS");
 
 export const useTraductionsSocket = (io, socket) => {
-  socket.on("JOIN_TRADUCTIONS_WAITINGLIST", () => {
-    logger.info(`JOIN_TRADUCTIONS_WAITINGLIST => ${socket.id}`);
+  socket.on("JOIN_WAITINGLIST", () => {
+    logger.info(`JOIN_WAITINGLIST => ${socket.id}`);
     if (!traductionWaitingList.includes(socket.id)) {
       traductionWaitingList.push(socket.id);
       console.log({ traductionWaitingList });
     }
   });
 
-  socket.on("LEAVE_TRADUCTIONS_WAITINGLIST", () => {
-    logger.info(`LEAVE_TRADUCTIONS_WAITINGLIST => ${socket.id}`);
+  socket.on("LEAVE_WAITINGLIST", () => {
+    logger.info(`LEAVE_WAITINGLIST => ${socket.id}`);
     if (traductionWaitingList.includes(socket.id)) {
       traductionWaitingList.splice(traductionWaitingList.indexOf(socket.id), 1);
       console.log({ traductionWaitingList });
     }
   });
 
-  socket.on("UPDATE_GAME_TRADUCTIONS", async ({ room, choice }) => {
-    logger.info(`UPDATE_GAME_TRADUCTIONS => ${room}`);
+  socket.on("UPDATE_GAME", async ({ room, choice }) => {
+    logger.info(`UPDATE_GAME => ${room}`);
 
     if (!traductionsGames[room]) {
       logger.error(`Game not found => ${room}`);
@@ -41,7 +41,7 @@ export const useTraductionsSocket = (io, socket) => {
 
     game.waitingNextStage += 1;
 
-    if (!game.stageData[choice].success) {
+    if (!game.stageData.traductions[choice].success) {
       game.stageFailed = true;
     }
 
@@ -50,9 +50,9 @@ export const useTraductionsSocket = (io, socket) => {
       return io.sockets.in(room).emit("UPDATE_GAME", diffObj(oldGame, game));
     }
 
-    if (game.player1.socket === socket.id && game.stageData[choice].success) {
+    if (game.player1.socket === socket.id && game.stageData.traductions[choice].success) {
       game.player1.score += 5;
-    } else if (game.stageData[choice].success) {
+    } else if (game.stageData.traductions[choice].success) {
       game.player2.score += 5;
     }
 
