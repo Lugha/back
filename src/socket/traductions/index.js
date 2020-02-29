@@ -42,9 +42,7 @@ export const useTraductionsSocket = (io, socket) => {
 
     game.waitingNextStage += 1;
 
-    console.log({ choice });
-
-    if (!game.stageData.traductions[choice].success) {
+    if (choice === null || !game.stageData.traductions[choice].success) {
       game.stageFailed = true;
     }
 
@@ -56,13 +54,10 @@ export const useTraductionsSocket = (io, socket) => {
         .emit("UPDATE_GAME", JSON.stringify(diffObj(oldGame, game)));
     }
 
-    if (
-      game.player1.socket === socket.id &&
-      game.stageData.traductions[choice].success
-    ) {
-      game.player1.score += 5;
-    } else if (game.stageData.traductions[choice].success) {
-      game.player2.score += 5;
+    const player = game.player1.socket === socket.id ? "player1" : "player2";
+
+    if (choice !== null && game.stageData.traductions[choice].success) {
+      game[player].score += 5;
     }
 
     if (game.waitingNextStage === 2) {
