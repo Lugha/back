@@ -29,7 +29,7 @@ export const useTraductionsSocket = (io, socket) => {
     }
   });
 
-  socket.on("UPDATE_GAME", async ({ room, choice }) => {
+  socket.on("UPDATE_GAME", async ({ room, choice, leave }) => {
     logger.info(`UPDATE_GAME => ${room}`);
 
     if (!traductionsGames[room]) {
@@ -39,6 +39,14 @@ export const useTraductionsSocket = (io, socket) => {
 
     const oldGame = traductionsGames[room];
     const game = { ...oldGame };
+
+    if (leave) {
+      game.active = false;
+      traductionsGames[room] = game;
+      return io.sockets
+        .in(room)
+        .emit("UPDATE_GAME", JSON.stringify(diffObj(oldGame, game)));
+    }
 
     game.waitingNextStage += 1;
 
