@@ -55,7 +55,21 @@ export const useTraductionsSocket = (io, socket) => {
     }
 
     if (game.stageFailed && game.waitingNextStage === 2) {
-      game.active = false;
+      if (game.actualRound === game.roundTotal) {
+        game.active = false;
+      } else {
+        game.actualRound += 1;
+        game.stageData = await new Promise((resolve, reject) => {
+          traductionModel.findOneRandom((err, result) => {
+            if (err) {
+              reject(err);
+            }
+            resolve(result);
+          });
+        });
+      }
+      game.waitingNextStage = 0;
+      game.stageFailed = false;
       traductionsGames[room] = game;
       return io.sockets
         .in(room)
