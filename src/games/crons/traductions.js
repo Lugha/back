@@ -11,7 +11,7 @@ export const traductionWaitingList = [];
 export const traductionsGames = {};
 const traductionGameTemplate = ({
   room,
-  roundTotal = 2,
+  roundTotal = 1,
   stageData = {},
   socket1,
   socket2
@@ -26,11 +26,11 @@ const traductionGameTemplate = ({
     stageFailed: false,
     player1: {
       socket: socket1,
-      score: 0
+      stageSubmited: false
     },
     player2: {
       socket: socket2,
-      score: 0
+      stageSubmited: false
     }
   };
 };

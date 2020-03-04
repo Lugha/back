@@ -29,7 +29,7 @@ export const useTraductionsSocket = (io, socket) => {
     }
   });
 
-  socket.on("UPDATE_GAME", async ({ room, choice, leave }) => {
+  socket.on("UPDATE_GAME", async ({ room = null, choice = null, leave = null }) => {
     logger.info(`UPDATE_GAME => ${room}`);
 
     if (!traductionsGames[room]) {
@@ -58,18 +58,18 @@ export const useTraductionsSocket = (io, socket) => {
       if (game.actualRound === game.roundTotal) {
         game.active = false;
       } else {
-        game.actualRound += 1;
-        game.stageData = await new Promise((resolve, reject) => {
-          traductionModel.findOneRandom((err, result) => {
-            if (err) {
-              reject(err);
-            }
-            resolve(result);
-          });
-        });
+        // game.actualRound += 1;
+        // game.stageData = await new Promise((resolve, reject) => {
+        //   traductionModel.findOneRandom((err, result) => {
+        //     if (err) {
+        //       reject(err);
+        //     }
+        //     resolve(result);
+        //   });
+        // });
       }
-      game.waitingNextStage = 0;
-      game.stageFailed = false;
+      // game.waitingNextStage = 0;
+      // game.stageFailed = false;
       traductionsGames[room] = game;
       return io.sockets
         .in(room)
