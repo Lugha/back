@@ -1,8 +1,8 @@
 "use strict";
 
-const db = require("../src/utils/mongoForMigration");
+const db = require("../src/services/mongo");
 
-module.exports.up = async function(next) {
+module.exports.up = async function() {
   await db.connect();
 
   const conn = await db.getConnect();
@@ -57,16 +57,12 @@ module.exports.up = async function(next) {
       ]
     }
   ]);
-
-  next();
 };
 
-module.exports.down = async function(next) {
+module.exports.down = async function() {
   await db.connect();
 
   const conn = await db.getConnect();
 
   await conn.collection("traductions").deleteMany({});
-
-  next();
 };

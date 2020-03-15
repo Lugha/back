@@ -54,8 +54,11 @@ export const useTraductionsSocket = (io, socket) => {
       game.waitingNextStage += 1;
       logger.info(`waitingNextStage => ${game.waitingNextStage}`);
 
+      const success =
+        choice !== null && game.stageData.traductions[choice].success;
+
       // on check si un joueur a mal repondue et on termine le stage
-      if (choice === null || !game.stageData.traductions[choice].success) {
+      if (!success) {
         game.stageFailed = true;
         logger.info(`Stage failed`);
       }
@@ -77,8 +80,12 @@ export const useTraductionsSocket = (io, socket) => {
       const player = game.player1.socket === socket.id ? "player1" : "player2";
 
       // on check si le joueur a bien repondu et on lui donne ses points
-      if (choice !== null && game.stageData.traductions[choice].success) {
+      if (success) {
         game[player].score += 5;
+      }
+
+      if (success && game.waitingNextStage === 1) {
+        game.stageFailed = false;
       }
 
       // on check si c'était le dernier round et si oui on arrête la game
@@ -91,7 +98,6 @@ export const useTraductionsSocket = (io, socket) => {
       if (game.waitingNextStage === 2 && game.active) {
         logger.info(`Next stage`);
         game.waitingNextStage = 0;
-        game.stageFailed = false;
         game.stageData = await new Promise((resolve, reject) => {
           traductionModel.findOneRandom((err, result) => {
             if (err) {

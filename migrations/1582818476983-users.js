@@ -1,6 +1,6 @@
 "use strict";
 
-const db = require("../src/utils/mongoForMigration");
+const db = require("../src/services/mongo");
 
 module.exports.up = async function(next) {
   await db.connect();
