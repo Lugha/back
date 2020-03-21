@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
 
-import { errorHandler } from "../middlewares/error";
+import { errorHandler } from "@middlewares/error";
 
 import api from "../api";
 

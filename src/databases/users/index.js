@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import  db from '../../services/mongo';
+import  db from '@services/mongo';
 
 import schema from './schema';
 

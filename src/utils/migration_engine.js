@@ -1,7 +1,7 @@
 /* eslint class-methods-use-this: "off" */
 
-import * as db from "../services/mongo";
-import MigrationModel from "../databases/migrations";
+import * as db from "@services/mongo";
+import MigrationModel from "@databases/migrations";
 
 class dbStore {
   async load(fn) {

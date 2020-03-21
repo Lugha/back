@@ -1,4 +1,4 @@
-import traductionModel from "../../../../databases/traductions";
+import traductionModel from "@databases/traductions";
 
 export default async (req, res) => {
   traductionModel.findOneRandom((err, resultat) => {

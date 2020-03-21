@@ -2,7 +2,7 @@ import log4js from "log4js";
 import { Strategy } from "passport-local";
 import passport from "passport";
 
-import usersModel from "../databases/users";
+import usersModel from "@databases/users";
 
 const logger = log4js.getLogger("PASSPORT:LOCAL");
 logger.level = 'debug';

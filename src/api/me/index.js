@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { authorization } from '../../middlewares/authorization';
+import { authorization } from '@middlewares/authorization';
 
 import get from './get/controller';
 

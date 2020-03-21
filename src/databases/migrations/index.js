@@ -1,4 +1,4 @@
-import * as db from '../../services/mongo';
+import * as db from '@services/mongo';
 
 import schema from './schema';
 

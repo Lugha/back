@@ -13,7 +13,7 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-import "../../strategies/local";
+import "@strategies/local";
 
 const router = express.Router();
 

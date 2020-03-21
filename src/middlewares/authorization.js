@@ -2,7 +2,7 @@ import log4js from "log4js";
 import { UNAUTHORIZED } from "http-status";
 import jwt from "jsonwebtoken";
 
-import usersModel from "../databases/users";
+import usersModel from "@databases/users";
 import configs from "../configs";
 
 const logger = log4js.getLogger("AUTHORIZATION");

@@ -2,11 +2,11 @@ import express from "express";
 import http from "http";
 import socketIo from "socket.io";
 
-import expressInit from "./services/express";
-import { socketInit } from "./socket";
-import { startGameLaunchers } from "./games";
+import expressInit from "@services/express";
+import socketInit from "@sockets/index";
+import startGameLaunchers from "@games/cron";
 
-import db from "./services/mongo";
+import db from "@services/mongo";
 
 import configs from "./configs";
 

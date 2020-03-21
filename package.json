@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "npm run migrate-up && nodemon -r esm ./src/index.js",
+    "dev": "npm run migrate-up && nodemon -r esm -r module-alias/register ./src/index.js",
     "lint": "node_modules/eslint/bin/eslint.js ./src --fix",
+    "migrate": "./node_modules/migrate/bin/migrate",
     "migrate-up": "./node_modules/migrate/bin/migrate up -- --store='./src/utils/migration_engine.esm.js' --matches '*.js'",
     "migrate-down": "./node_modules/migrate/bin/migrate down -- --store='./src/utils/migration_engine.esm.js' --matches '*.js'",
     "docker-clean": "docker stop `docker ps -qa` && docker rm `docker ps -qa`"
@@ -23,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "log4js": "^6.1.2",
     "migrate": "^1.6.2",
+    "module-alias": "^2.2.2",
     "mongoose": "^5.9.2",
     "mongoose-simple-random": "^0.4.1",
     "nodemon": "^2.0.2",
@@ -44,5 +46,16 @@
     "hooks": {
       "pre-commit": "npm run lint"
     }
+  },
+  "_moduleAliases": {
+    "@src": "./src",
+    "@configs": "./src/configs",
+    "@databases": "./src/databases",
+    "@games": "./src/games",
+    "@middlewares": "./src/middlewares",
+    "@services": "./src/services",
+    "@sockets": "./src/sockets",
+    "@strategies": "./src/strategies",
+    "@utils": "./src/utils"
   }
 }
